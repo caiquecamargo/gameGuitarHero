@@ -1,7 +1,6 @@
 package ufabc.edu.br.gameguitarhero.screen;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.PerspectiveCamera;
@@ -18,8 +17,9 @@ import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.math.Vector3;
 
 import ufabc.edu.br.gameguitarhero.model.AbstractModel;
+import ufabc.edu.br.gameguitarhero.model.Dahaka;
 import ufabc.edu.br.gameguitarhero.model.FellMonster;
-import ufabc.edu.br.gameguitarhero.model.Knight;
+import ufabc.edu.br.gameguitarhero.util.Commands;
 import ufabc.edu.br.gameguitarhero.util.Parameters;
 
 public class SelectModelScreen extends AbstractScreen{
@@ -67,21 +67,25 @@ public class SelectModelScreen extends AbstractScreen{
 
 	@Override
 	public void update(float delta) {
-		if (Gdx.input.isKeyJustPressed(Input.Keys.LEFT)) {
+		if (Commands.commands[Commands.LEFT] && !Commands.pressed[Commands.LEFT]) {
 			if (modelSelector > 0) { 
 				modelSelector--;
 				selectModel();
 			}
+			Commands.pressed[Commands.LEFT] = true;
 		}
-		if (Gdx.input.isKeyJustPressed(Input.Keys.RIGHT)) {
+		if (Commands.commands[Commands.RIGHT] && !Commands.pressed[Commands.RIGHT]) {
 			if (modelSelector < 2) {
 				modelSelector++;
 				selectModel();
 			}
+			Commands.pressed[Commands.RIGHT] = true;
 		}
-		if (Gdx.input.isKeyJustPressed(Input.Keys.ENTER)) {
+		if (Commands.commands[Commands.ENTER] && !Commands.pressed[Commands.ENTER]) {
 			this.setDone(true);
+			Commands.pressed[Commands.ENTER] = true;
 		}
+		model.update(delta);
 	}
 
 	@Override
@@ -127,14 +131,14 @@ public class SelectModelScreen extends AbstractScreen{
 			break;
 			
 		case 2:
-			model = new Knight("KNIGHT");
+			model = new Dahaka("DAHAKA");
 			break;
 		}
 		
 		menu.setModel(model);
-		model.getCurrent().transform.scale(0.4f, 0.4f, 0.4f);
-		model.getCurrent().transform.rotate(Vector3.Y, -165);
-		model.getCurrent().transform.translate(2, 0, 0);
+//		model.getCurrent().transform.scale(0.4f, 0.4f, 0.4f);
+//		model.getCurrent().transform.rotate(Vector3.Y, -165);
+//		model.getCurrent().transform.translate(2, 0, 0);
 	}
 	
 	private void setModelSelector(AbstractModel model) {
@@ -142,7 +146,7 @@ public class SelectModelScreen extends AbstractScreen{
 			modelSelector = 0;
 		else if(model.getId().equals("FELLMONSTER2"))
 			modelSelector = 1;
-		else if(model.getId().equals("KNIGHT"))
+		else if(model.getId().equals("DAHAKA"))
 			modelSelector = 2;
 		
 		selectModel();

@@ -1,6 +1,6 @@
 package ufabc.edu.br.gameguitarhero.util;
 
-public class Discos {
+public final class Discos {
 	public static final int BTN_1 = 0;
 	public static final int BTN_2 = 1;
 	public static final int BTN_3 = 2;

@@ -5,6 +5,8 @@ public abstract class AbstractModel {
 	public abstract void update(float delta);
 	public abstract GameObject getCurrent();
 	public abstract int getState();
+	public abstract void setState(int state);
+	public abstract void setGamePosition();
 	
 	public AbstractModel (String id) {
 		this.id = id;

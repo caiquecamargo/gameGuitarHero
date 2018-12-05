@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Matrix4;
 
 import ufabc.edu.br.gameguitarhero.MainClass;
+import ufabc.edu.br.gameguitarhero.util.Commands;
 import ufabc.edu.br.gameguitarhero.util.Parameters;
 
 public class StartScreen extends AbstractScreen{
@@ -30,7 +31,7 @@ public class StartScreen extends AbstractScreen{
 		tranMatrix  = new Matrix4();
 		font = new BitmapFont(Gdx.files.internal("fonts/bronx.fnt"));
 		progress = 0;
-		music = Gdx.audio.newMusic(Gdx.files.internal("mainIntro.mp3"));
+		music = Gdx.audio.newMusic(Gdx.files.internal("music/mainIntro.mp3"));
 		music.setLooping(true);
 		music.play();
 	}
@@ -45,9 +46,12 @@ public class StartScreen extends AbstractScreen{
 	@Override
 	public void update(float delta) {
 		if (loaded) {
-			if (Gdx.input.justTouched()) {
+			if ((Gdx.input.justTouched() || Commands.commands[Commands.ENTER]) && !Commands.pressed[Commands.ENTER]) {
 				setDone(true);
 				music.stop();
+				Commands.pressed[Commands.ENTER] = true;
+			}else {
+				Commands.pressed[Commands.ENTER] = false;
 			}
 		}
 		progress = (int)(MainClass.assetManager.getProgress()*100);

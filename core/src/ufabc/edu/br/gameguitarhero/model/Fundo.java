@@ -19,6 +19,7 @@ public class Fundo extends AbstractModel{
 		tex = new TextureAttribute(TextureAttribute.createDiffuse(new Texture(Gdx.files.internal("estrelas.png"))));
 		gameObject = new GameObject(builder.createBox(10.0f, 10.0f, 0.0001f, new Material(tex),
                 VertexAttributes.Usage.Position | VertexAttributes.Usage.Normal | VertexAttributes.Usage.TextureCoordinates));
+		gameObject.transform.translate(0, 0, -2.0f);
 	}
 
 	@Override
@@ -38,6 +39,18 @@ public class Fundo extends AbstractModel{
 	@Override
 	public int getState() {
 		return state;
+	}
+
+	@Override
+	public void setGamePosition() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void setState(int state) {
+		// TODO Auto-generated method stub
+		
 	}
 	
 }

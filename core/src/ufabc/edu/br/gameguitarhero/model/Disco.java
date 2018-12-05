@@ -8,9 +8,10 @@ import com.badlogic.gdx.graphics.g3d.attributes.ColorAttribute;
 import com.badlogic.gdx.graphics.g3d.utils.ModelBuilder;
 
 public class Disco extends AbstractModel{
-	private int state;
+	private int 	   state;
 	private GameObject gameObject;
-	private Attribute attrib[];
+	private Attribute  attrib[];
+	private boolean    collided = false;
 
 	public Disco(String id, Color color) {
 		super(id);
@@ -47,5 +48,29 @@ public class Disco extends AbstractModel{
 	@Override
 	public int getState() {
 		return state;
+	}
+	
+	public boolean getCollided() {
+		return collided;
+	}
+	
+	public void setCollided(boolean collided) {
+		this.collided = collided;
+	}
+
+
+
+	@Override
+	public void setGamePosition() {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+
+	@Override
+	public void setState(int state) {
+		// TODO Auto-generated method stub
+		
 	}
 }

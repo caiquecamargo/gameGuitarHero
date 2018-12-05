@@ -1,7 +1,6 @@
 package ufabc.edu.br.gameguitarhero.screen;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.PerspectiveCamera;
@@ -12,10 +11,10 @@ import com.badlogic.gdx.graphics.g3d.ModelBatch;
 import com.badlogic.gdx.graphics.g3d.attributes.ColorAttribute;
 import com.badlogic.gdx.graphics.g3d.environment.DirectionalLight;
 import com.badlogic.gdx.math.Matrix4;
-import com.badlogic.gdx.math.Vector3;
 
 import ufabc.edu.br.gameguitarhero.model.AbstractModel;
 import ufabc.edu.br.gameguitarhero.model.FellMonster;
+import ufabc.edu.br.gameguitarhero.util.Commands;
 import ufabc.edu.br.gameguitarhero.util.Menus;
 import ufabc.edu.br.gameguitarhero.util.Parameters;
 
@@ -27,7 +26,6 @@ public class MenuScreen extends AbstractScreen{
 	private ModelBatch 	modelBatch;
 	private Matrix4     viewMatrix;
 	private Matrix4     tranMatrix;
-//	private BitmapFont 	font;
 	private Music   	music;
 	private int 	    menuSelect = Menus.NOT_SELECTED;
 	private AbstractModel model;
@@ -50,14 +48,11 @@ public class MenuScreen extends AbstractScreen{
 		camera.near = 0.1f;
 		camera.far  = 100f;
 		camera.update();
-		music = Gdx.audio.newMusic(Gdx.files.internal("music3.mp3"));
+		music = Gdx.audio.newMusic(Gdx.files.internal("music/music3.mp3"));
 		music.setLooping(true);
 		music.play();
 		
 		model = new FellMonster("FELLMONSTER");
-		model.getCurrent().transform.scale(0.4f, 0.4f, 0.4f);
-		model.getCurrent().transform.rotate(Vector3.Y, -165);
-		model.getCurrent().transform.translate(2, 0, 0);
 		
 		menu = new Texture[4];
 		menu[Menus.NOT_SELECTED]  = new Texture(Gdx.files.internal("menu/BotoesGame.png"));
@@ -80,19 +75,21 @@ public class MenuScreen extends AbstractScreen{
 
 	@Override
 	public void update(float delta) {
-		// TODO Auto-generated method stub
-		//System.out.println("FRENTE: " + Commands.commands[Commands.FRENTE] + " TRAS: " + Commands.commands[Commands.TRAS]);
-		if (Gdx.input.isKeyJustPressed(Input.Keys.UP)) {
+		if (Commands.commands[Commands.UP] && !Commands.pressed[Commands.UP]) {
 			if (menuSelect > 0) menuSelect--;
+			Commands.pressed[Commands.UP] = true;
 		}
-		if (Gdx.input.isKeyJustPressed(Input.Keys.DOWN)) {
+		if (Commands.commands[Commands.DOWN] && !Commands.pressed[Commands.DOWN]) {
 			if (menuSelect < 3) menuSelect++;
+			Commands.pressed[Commands.DOWN] = true;
 		}
-		if (Gdx.input.isKeyJustPressed(Input.Keys.ENTER)) {
+		if (Commands.commands[Commands.ENTER] && !Commands.pressed[Commands.ENTER]) {
 			setDone(true);
 			if (menuSelect == Menus.PLAY)
 				music.stop();
+			Commands.pressed[Commands.ENTER] = true;
 		}
+		model.update(delta);
 	}
 
 	@Override

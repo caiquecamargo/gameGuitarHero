@@ -27,4 +27,16 @@ public class Knight extends AbstractModel{
 	public int getState() {
 		return state;
 	}
+
+	@Override
+	public void setGamePosition() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void setState(int state) {
+		// TODO Auto-generated method stub
+		
+	}
 }

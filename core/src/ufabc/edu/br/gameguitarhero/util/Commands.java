@@ -1,8 +1,8 @@
 package ufabc.edu.br.gameguitarhero.util;
 
 public class Commands {
-	public static boolean[] commands = {false, false, false, false, false, false, false, false, false, false};
-	public static boolean[] pressed = {false, false, false, false, false, false, false, false, false, false};
+	public static boolean[] commands = {false, false, false, false, false, false, false, false, false, false, false};
+	public static boolean[] pressed = {false, false, false, false, false, false, false, false, false, false, false};
     public static final int UP   	 = 0;
     public static final int DOWN     = 1;
     public static final int LEFT 	 = 2;
@@ -13,4 +13,5 @@ public class Commands {
     public static final int BTN_4	 = 7;
     public static final int BTN_5	 = 8;
     public static final int ENTER    = 9;
+    public static final int ESCAPE    = 9;
 }

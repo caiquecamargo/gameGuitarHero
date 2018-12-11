@@ -9,14 +9,16 @@ import com.badlogic.gdx.graphics.g3d.utils.ModelBuilder;
 import com.badlogic.gdx.math.Vector3;
 
 public class Fundo extends AbstractModel{
-	private int state;
-	private GameObject gameObject;
-	private TextureAttribute tex;
+	private int 				state;
+	private GameObject 			gameObject;
+	private TextureAttribute 	tex;
 
 	public Fundo(String id) {
 		super(id);
+		
+		//Cria o modelo, este modelo defini o ponto inicial de renderização dos modelos do jogo.
 		ModelBuilder builder = new ModelBuilder();
-		tex = new TextureAttribute(TextureAttribute.createDiffuse(new Texture(Gdx.files.internal("estrelas.png"))));
+		tex = new TextureAttribute(TextureAttribute.createDiffuse(new Texture(Gdx.files.internal("models/estrelas.png"))));
 		gameObject = new GameObject(builder.createBox(10.0f, 10.0f, 0.0001f, new Material(tex),
                 VertexAttributes.Usage.Position | VertexAttributes.Usage.Normal | VertexAttributes.Usage.TextureCoordinates));
 		gameObject.transform.translate(0, 0, -2.0f);
@@ -43,14 +45,17 @@ public class Fundo extends AbstractModel{
 
 	@Override
 	public void setGamePosition() {
-		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
 	public void setState(int state) {
-		// TODO Auto-generated method stub
 		
+	}
+
+	@Override
+	public String[] getDescription() {
+		return null;
 	}
 	
 }

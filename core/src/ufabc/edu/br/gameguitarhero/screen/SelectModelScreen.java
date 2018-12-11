@@ -8,19 +8,18 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g3d.Environment;
-import com.badlogic.gdx.graphics.g3d.Material;
 import com.badlogic.gdx.graphics.g3d.ModelBatch;
 import com.badlogic.gdx.graphics.g3d.attributes.ColorAttribute;
 import com.badlogic.gdx.graphics.g3d.attributes.TextureAttribute;
 import com.badlogic.gdx.graphics.g3d.environment.DirectionalLight;
 import com.badlogic.gdx.math.Matrix4;
-import com.badlogic.gdx.math.Vector3;
 
 import ufabc.edu.br.gameguitarhero.model.AbstractModel;
 import ufabc.edu.br.gameguitarhero.model.Dahaka;
-import ufabc.edu.br.gameguitarhero.model.FellMonster;
+import ufabc.edu.br.gameguitarhero.model.Doomsday;
 import ufabc.edu.br.gameguitarhero.util.Commands;
 import ufabc.edu.br.gameguitarhero.util.Parameters;
+import ufabc.edu.br.gameguitarhero.util.SoundFXMenus;
 
 public class SelectModelScreen extends AbstractScreen{
 	
@@ -43,7 +42,7 @@ public class SelectModelScreen extends AbstractScreen{
 		
 		modelBatch = new ModelBatch();
 		environment = new Environment();
-		environment.set(new ColorAttribute(ColorAttribute.AmbientLight, 0.4f, 0.4f, 0.4f, 1));
+		environment.set(new ColorAttribute(ColorAttribute.AmbientLight, 0.8f, 0.8f, 0.8f, 1));
 		environment.add(new DirectionalLight().set(0.8f, 0.8f, 0.8f, -1f, -0.8f, -0.2f));
 		camera = new PerspectiveCamera(67.0f, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 		camera.position.set(0, 1.7f, 2.2f);
@@ -56,8 +55,6 @@ public class SelectModelScreen extends AbstractScreen{
 		viewMatrix = new Matrix4();
 		tranMatrix = new Matrix4();
 		font = new BitmapFont(Gdx.files.internal("fonts/horroroid.fnt"));
-
-		font.setColor(Color.YELLOW);
 	}
 
 	@Override
@@ -70,13 +67,15 @@ public class SelectModelScreen extends AbstractScreen{
 		if (Commands.commands[Commands.LEFT] && !Commands.pressed[Commands.LEFT]) {
 			if (modelSelector > 0) { 
 				modelSelector--;
+				SoundFXMenus.getSoundbyName("MODEL_SELECT_SOUND2").play();
 				selectModel();
 			}
 			Commands.pressed[Commands.LEFT] = true;
 		}
 		if (Commands.commands[Commands.RIGHT] && !Commands.pressed[Commands.RIGHT]) {
-			if (modelSelector < 2) {
+			if (modelSelector < 3) {
 				modelSelector++;
+				SoundFXMenus.getSoundbyName("MODEL_SELECT_SOUND1").play();
 				selectModel();
 			}
 			Commands.pressed[Commands.RIGHT] = true;
@@ -92,7 +91,7 @@ public class SelectModelScreen extends AbstractScreen{
 	public void draw(float delta) {
 		Gdx.gl.glViewport(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT);
-		Gdx.gl.glClearColor(0, 0, 0, 1);
+		Gdx.gl.glClearColor(0.1f, 0.1f, 0.1f, 1);
 
 		modelBatch.begin(camera);
 		modelBatch.render(model.getCurrent(), environment);
@@ -104,7 +103,15 @@ public class SelectModelScreen extends AbstractScreen{
 		spriteBatch.setProjectionMatrix(viewMatrix);
 		spriteBatch.setTransformMatrix(tranMatrix);
 		spriteBatch.begin();
-		//font.draw(spriteBatch, "FPS: " + Gdx.graphics.getFramesPerSecond(), 10, 450);
+		font.setColor(Color.RED);
+		font.draw(spriteBatch, "SELECT A MONSTER TO PLAY ", 400, 450);
+		font.setColor(Color.YELLOW);
+		font.draw(spriteBatch, model.getId(), 400, 400);
+		font.setColor(Color.WHITE);
+		font.draw(spriteBatch, model.getDescription()[0], 400, 350);
+		font.draw(spriteBatch, model.getDescription()[1], 400, 300);
+		font.draw(spriteBatch, model.getDescription()[2], 400, 250);
+		font.draw(spriteBatch, model.getDescription()[3], 400, 200);
 
 		spriteBatch.end();
 		
@@ -117,37 +124,43 @@ public class SelectModelScreen extends AbstractScreen{
 	private void selectModel() {
 		switch(modelSelector) {
 		case 0:
-			model = new FellMonster("FELLMONSTER");
-			tex = new TextureAttribute(TextureAttribute.createDiffuse(new Texture(Gdx.files.internal("models/fguard.jpg"))));
-			for (Material mat: model.getCurrent().materials)
-				  mat.set(tex);
+			model = new Doomsday("DOOMSDAY");
 			break;
 			
 		case 1:
-			model = new FellMonster("FELLMONSTER2");
-			tex = new TextureAttribute(TextureAttribute.createDiffuse(new Texture(Gdx.files.internal("models/fguard2.jpg"))));
-			for (Material mat: model.getCurrent().materials)
-				  mat.set(tex);
+			model = new Doomsday("DOOMSDAY: PREPARE TO DIE");
+			tex = new TextureAttribute(TextureAttribute.createDiffuse(new Texture(Gdx.files.internal("models/Doomsday/INJ_iOS_VILLAIN_Doomsday_Injustice_Body_S.png"))));
+			Doomsday dom = (Doomsday) model;
+			dom.setTexture(tex);
+			model = dom;
 			break;
 			
 		case 2:
 			model = new Dahaka("DAHAKA");
+			
+			break;
+		
+		case 3:
+			model = new Dahaka("DAHAKA: WHITE???");
+			tex = new TextureAttribute(TextureAttribute.createDiffuse(new Texture(Gdx.files.internal("models/Dahaka/Dahaka_Body_s.png"))));
+			Dahaka d = (Dahaka) model;
+			d.setTexture(tex);
+			model = d;
 			break;
 		}
 		
 		menu.setModel(model);
-//		model.getCurrent().transform.scale(0.4f, 0.4f, 0.4f);
-//		model.getCurrent().transform.rotate(Vector3.Y, -165);
-//		model.getCurrent().transform.translate(2, 0, 0);
 	}
 	
 	private void setModelSelector(AbstractModel model) {
-		if(model.getId().equals("FELLMONSTER"))
+		if(model.getId().equals("DOOMSDAY"))
 			modelSelector = 0;
-		else if(model.getId().equals("FELLMONSTER2"))
+		else if(model.getId().equals("DOOMSDAY2"))
 			modelSelector = 1;
 		else if(model.getId().equals("DAHAKA"))
 			modelSelector = 2;
+		else if(model.getId().equals("DAHAKA2"))
+			modelSelector = 3;
 		
 		selectModel();
 	}

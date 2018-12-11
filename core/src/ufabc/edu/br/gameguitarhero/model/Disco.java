@@ -15,12 +15,16 @@ public class Disco extends AbstractModel{
 
 	public Disco(String id, Color color) {
 		super(id);
+		
+		//Atributos de iluminação do modelo.
 		attrib = new Attribute[5];
 		attrib[0] = ColorAttribute.createAmbient(Color.BLACK);
 		attrib[1] = ColorAttribute.createDiffuse(color);
 		attrib[2] = ColorAttribute.createReflection(Color.WHITE);
 		attrib[3] = ColorAttribute.createSpecular(color);
 		attrib[4] = ColorAttribute.createSpecular(Color.WHITE);
+		
+		//Criação do modelo.
 		ModelBuilder builder = new ModelBuilder();
 		gameObject = new GameObject(builder.createCylinder(0.08f, 0.005f, 0.05f, 100, new Material(attrib), Usage.Position | Usage.Normal));
 	}
@@ -58,19 +62,18 @@ public class Disco extends AbstractModel{
 		this.collided = collided;
 	}
 
-
-
 	@Override
-	public void setGamePosition() {
-		// TODO Auto-generated method stub
+	public void setGamePosition() {	
 		
 	}
 
-
-
 	@Override
 	public void setState(int state) {
-		// TODO Auto-generated method stub
-		
+
+	}
+
+	@Override
+	public String[] getDescription() {
+		return null;
 	}
 }

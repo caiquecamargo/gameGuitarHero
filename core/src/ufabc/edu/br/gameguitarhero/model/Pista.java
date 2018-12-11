@@ -7,7 +7,7 @@ import com.badlogic.gdx.graphics.g3d.attributes.TextureAttribute;
 import com.badlogic.gdx.graphics.g3d.utils.ModelBuilder;
 import com.badlogic.gdx.math.Vector3;
 
-import ufabc.edu.br.gameguitarhero.MainClass;
+import ufabc.edu.br.gameguitarhero.AssetsManagement.AssetManagement;
 
 public class Pista extends AbstractModel{
 	private int state;
@@ -17,8 +17,10 @@ public class Pista extends AbstractModel{
 
 	public Pista(String id) {
 		super(id);
+		
+		//Cria o modelo da pista do jogo
 		ModelBuilder builder = new ModelBuilder();
-		tex = new TextureAttribute(TextureAttribute.createDiffuse((Texture)MainClass.assetManager.get("braco.jpg")));
+		tex = new TextureAttribute(TextureAttribute.createDiffuse((Texture)AssetManagement.assetManager.get("textures/braco.jpg")));
 		gameObject = new GameObject(builder.createBox(0.5f, 0.001f, 2.0f, new Material(tex),
                 VertexAttributes.Usage.Position | VertexAttributes.Usage.Normal | VertexAttributes.Usage.TextureCoordinates));
 	}
@@ -52,14 +54,17 @@ public class Pista extends AbstractModel{
 
 	@Override
 	public void setGamePosition() {
-		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
 	public void setState(int state) {
-		// TODO Auto-generated method stub
 		
+	}
+
+	@Override
+	public String[] getDescription() {
+		return null;
 	}
 	
 }
